@@ -48,11 +48,11 @@ async def on_member_join(member):
 	channel = bot.get_channel(int(os.getenv('DISCORD_CHANNEL')))
 	await channel.send(f'Welcome, {member.name}! \nThe current Among Us room is #{amongUsRoom}')
 
-@bot.command()
+@bot.command(name='getRoom', help='Displays what the current Among Us room access code is.')
 async def getRoom(ctx):
 	await ctx.send(f'#{amongUsRoom}')
 
-@bot.command()
+@bot.command(name= 'setRoom', help='Allows you to change the current Among Us room access code.')
 async def setRoom(ctx, arg):
 	global amongUsRoom
 	amongUsRoom = arg[0:5]
