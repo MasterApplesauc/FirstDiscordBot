@@ -14,8 +14,10 @@ intents.members = True
 bot = commands.Bot(command_prefix='$', intents=intents)
 
 #Vars
-global amongUsRoom 
-amongUsRoom = '00000'
+global amongUsRoom
+f = open('.\\.data') 
+amongUsRoom = f.readline()
+f.close()
 
 @bot.event
 async def on_ready():
@@ -34,6 +36,9 @@ async def getRoom(ctx):
 async def setRoom(ctx, arg):
 	global amongUsRoom
 	amongUsRoom = arg[0:5]
+	f = open('.\\.data', 'w')
+	f.write(amongUsRoom)
+	f.close()
 
 	await ctx.send(f"Okay. I'll set the AmongUs room to: #{amongUsRoom}")
 
