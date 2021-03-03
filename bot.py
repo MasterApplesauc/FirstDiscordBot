@@ -5,7 +5,10 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-client = discord.Client()
+intents = discord.Intents.default()
+intents.members = True
+
+client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
@@ -13,7 +16,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-	print(member)
+	print('new member has joined')
 	await member.create_dm()
 	await member.dm_channel.send(
 		f'Hi {member.name}, welcome to my Discord server!'
