@@ -1,6 +1,8 @@
 import os, random
 import discord
 
+from discord.ext import commands
+
 from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -8,32 +10,21 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 
-client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix='$')
 
-@client.event
-async def on_ready():
-	print(f'{client.user.name} has connected to Discord!')
+#Vars
+global amongUsRoom 
+amongUsRoom = '00000'
 
-@client.event
-async def on_member_join(member):
-	await member.create_dm()
-	await member.dm_channel.send(
-		f'Hi {member.name}, welcome to my Discord server!'
-	)
+@bot.command()
+async def getRoom(ctx):
+	await ctx.send(f'#{amongUsRoom}')
 
-@client.event
-async def on_message(message):
-	if message.author == client.user:
-		return
+@bot.command()
+async def setRoom(ctx, arg):
+	global amongUsRoom
+	amongUsRoom = arg[0:5]
 
-	if message.content == '_randomNumber':
-		response = random.randint(0, 1000000)
-		await message.channel.send(response)
+	await ctx.send(f"Okay. I'll set the AmongUs room to: #{amongUsRoom}")
 
-	if message.content == '!WhereAreWe':
-		number = 'AX5BD'
-		response = f'AmongUs Room: #{number}'
-		await message.channel.send(response)
-
-
-client.run(TOKEN)
+bot.run(TOKEN)
