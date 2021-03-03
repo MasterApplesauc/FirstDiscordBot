@@ -6,7 +6,6 @@ from discord.ext import commands
 from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-CHANNEL = os.getenv('DISCORD_CHANNEL')
 
 intents = discord.Intents.default()
 intents.members = True
@@ -25,7 +24,7 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-	channel = bot.get_channel(os.getenv('DISCORD_CHANNEL'))
+	channel = bot.get_channel(int(os.getenv('DISCORD_CHANNEL')))
 	await channel.send(f'Welcome, {member.name}! \nThe current Among Us room is #{amongUsRoom}')
 
 @bot.command()
