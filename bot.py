@@ -25,8 +25,8 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-	print('a member has joined.')
-	await member.send('yo!')
+	channel = bot.get_channel(os.getenv('DISCORD_CHANNEL'))
+	await channel.send(f'Welcome, {member.name}! \nThe current Among Us room is #{amongUsRoom}')
 
 @bot.command()
 async def getRoom(ctx):
@@ -40,6 +40,6 @@ async def setRoom(ctx, arg):
 	f.write(amongUsRoom)
 	f.close()
 
-	await ctx.send(f"Okay. I'll set the AmongUs room to: #{amongUsRoom}")
+	await ctx.send(f"Okay. I'll set the Among Us room to: #{amongUsRoom}")
 
 bot.run(TOKEN)
